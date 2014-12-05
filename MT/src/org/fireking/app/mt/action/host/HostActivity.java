@@ -21,7 +21,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
  * 提供底部切换按钮
  * 
  * @author join
- *
+ * 
  */
 @ContentView(R.layout.activity_host)
 public class HostActivity extends BaseActivity {
