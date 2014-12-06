@@ -7,7 +7,7 @@ import android.app.Application;
  * application基类，进行初始化操作
  * 
  * @author join
- *
+ * 
  */
 public class BaseApplication extends Application {
 

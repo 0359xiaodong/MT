@@ -1,24 +1,20 @@
 package org.fireking.app.kimiralibrary.base;
 
-import java.util.List;
-
-import com.google.inject.Inject;
-
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.context.event.OnCreateEvent;
 import roboguice.event.Observes;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
 
 /**
  * activity的基类<br />
  * 完成activity的功能的初始化操作
  * 
  * @author join
- *
+ * 
  */
 public abstract class BaseActivity extends RoboActionBarActivity {
 
@@ -61,45 +57,49 @@ public abstract class BaseActivity extends RoboActionBarActivity {
 	protected void doSomethingsOnCreate(@Observes OnCreateEvent onCreate) {
 	}
 
+	protected void addFragments(int rId, Fragment[] fragments) {
+		FragmentTransaction tx = getTransaction();
+		for (Fragment f : fragments) {
+			tx.add(rId, f);
+		}
+		tx.commit();
+	}
+
+	protected void hideFragments(Fragment[] fragments) {
+		FragmentTransaction tx = getTransaction();
+		for (Fragment f : fragments) {
+			tx.hide(f);
+		}
+		tx.commit();
+	}
+
 	/**
-	 * 获取fragment的事务对象
+	 * 显示fragment
+	 * 
+	 * @param fragment
+	 */
+	protected void showFragment(Fragment fragment) {
+		FragmentTransaction tx = getTransaction();
+		tx.show(fragment);
+		tx.commit();
+	}
+
+	/**
+	 * 获取fragmenttransaction
 	 * 
 	 * @return
 	 */
-	protected FragmentTransaction getFragmentTransaction() {
-		return getSupportFragmentManager().beginTransaction();
+	protected FragmentTransaction getTransaction() {
+		return getManager().beginTransaction();
 	}
 
 	/**
-	 * 显示activity中的某个fragment
+	 * 获取fragmentmanager
+	 * 
+	 * @return
 	 */
-	protected void showFragment(int index) {
-		FragmentTransaction ftx = getFragmentTransaction();
-		List<Fragment> fragments = getSupportFragmentManager().getFragments();
-		Fragment f = fragments.get(index);
-		ftx.show(f).commit();
+	protected FragmentManager getManager() {
+		return getSupportFragmentManager();
 	}
 
-	/**
-	 * 隐藏activity中的所有fragment
-	 */
-	protected void hideFragment() {
-		FragmentTransaction ftx = getFragmentTransaction();
-		List<Fragment> fragments = getSupportFragmentManager().getFragments();
-		for (Fragment f : fragments) {
-			ftx.hide(f);
-		}
-		ftx.commit();
-	}
-
-	/**
-	 * 添加fragmnet到activity中去
-	 */
-	protected void attachFragments(int resId, Fragment[] fragments) {
-		FragmentTransaction ftx = getFragmentTransaction();
-		for (Fragment f : fragments) {
-			ftx.add(resId, f);
-		}
-		ftx.commit();
-	}
 }
