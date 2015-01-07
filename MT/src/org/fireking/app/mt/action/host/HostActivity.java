@@ -34,7 +34,7 @@ public class HostActivity extends BaseActivity {
 	@Override
 	protected void doSomethingsOnCreate(@Observes OnCreateEvent onCreate) {
 		// 添加所有的fragment到activity中
-		attachFragments(R.id.content, fragments);
+		addFragments(R.id.content, fragments);
 		// 监听radiobutton的变化，以实现fragment的动态切换
 		hostRadioGroup.setOnCheckedChangeListener(onCheckedChangeListener);
 	}
@@ -48,11 +48,11 @@ public class HostActivity extends BaseActivity {
 		@Override
 		public void onCheckedChanged(RadioGroup group, int checkedId) {
 			int count = group.getChildCount();
-			hideFragment();
+			hideFragments(fragments);
 			for (int i = 0; i < count; i++) {
 				RadioButton button = (RadioButton) group.getChildAt(i);
 				if (button.isChecked()) {
-					showFragment(i);
+					showFragment(fragments[i]);
 				}
 			}
 		}
